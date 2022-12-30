@@ -17,6 +17,15 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.3</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -64,6 +73,7 @@
 			<version>2.9.2</version>
 		</dependency>
 
+
 	</dependencies>
 
 	<build>
@@ -75,6 +85,17 @@
 		</plugins>
 	</build>
 	<repositories>
+
+
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
+
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
