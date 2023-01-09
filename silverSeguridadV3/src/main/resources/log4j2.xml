@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="3600">
+    <Properties>
+        <Property name="log-path">./logs</Property>
+    </Properties>
+    <Appenders>
+        <!-- Appender Console -->
+        <Console name="searchFilesConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </Console>
+
+        <!-- Appender Exceptions -->
+        <RollingFile name="searchFilesAppenderEXCEPTION"
+                     fileName="${log-path}/searchFiles_exception.log"
+                     filePattern="${log-path}/searchFiles_exception_%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1} - %M] Line %L - %msg%n</pattern>
+            </PatternLayout>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 GB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+
+        <!-- Apennder Info -->
+        <RollingFile name="searchFilesAppenderINFO"
+                     fileName="${log-path}/searchFiles_info.log"
+                     filePattern="${log-path}/searchFiles_info_%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1} - %M] Line %L - %msg%n</pattern>
+            </PatternLayout>
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 GB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+
+        <!-- Appender DEBUG -->
+        <RollingFile name="searchFilesAppenderDEBUG"
+                     fileName="log/searchFiles_debug.log"
+                     filePattern="log/searchFiles_debug_%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1} - %M] Line %L - %msg%n</pattern>
+            </PatternLayout>
+            <Filters>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 GB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.app" level="debug" additivity="false">
+            <appender-ref ref="searchFilesAppenderDEBUG" level="debug"/>
+            <appender-ref ref="searchFilesAppenderEXCEPTION" level="error"/>
+            <appender-ref ref="searchFilesConsoleAppender" level="ALL"/>
+        </Logger>
+
+        <Root level="info" additivity="false">
+            <AppenderRef ref="searchFilesConsoleAppender"/>
+        </Root>
+
+    </Loggers>
+</Configuration>

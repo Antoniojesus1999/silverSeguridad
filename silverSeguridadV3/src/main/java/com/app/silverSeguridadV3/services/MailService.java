@@ -1,14 +1,27 @@
+
 package com.app.silverSeguridadV3.services;
 
 import com.app.silverSeguridadV3.models.MailRequest;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.rtf.RTFEditorKit;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 @Service
@@ -18,29 +31,19 @@ public class MailService {
     private JavaMailSender mailSender;
 
 
-
     public void enviarCorreo(MailRequest data) {
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream("documento.docx");
-        } catch (FileNotFoundException e) {
 
-            log.severe("Error al buscar el archivo");
-            throw new RuntimeException(e);
-        }
-
-        try {
-            XWPFDocument document = new XWPFDocument(in);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        //in.close();
-        /*System.out.println(data.getNombre()+data.getApellido());
+        System.out.println(data.getNombre() + data.getApellido());
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("antoniojesuspv99@gmail.com");
         message.setSubject("Asunto del correo");
-        message.setText("Parametro nombre -> "+data.getNombre()+ " Parametro apellido: "+data.getApellido());
-        mailSender.send(message);*/
+        message.setText("Parametro nombre -> " + data.getNombre() + " Parametro apellido: " + data.getApellido());
+        mailSender.send(message);
     }
 
+    public MailRequest leerDocumentoWordDoc(MailRequest data)  {
+        return data;
+    }
 }
+
+

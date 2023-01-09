@@ -1,5 +1,5 @@
 package com.app.silverSeguridadV3.config;
-
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,7 +9,7 @@ import java.util.Properties;
 
 @Configuration
 public class MailConfiguration {
-/*    @Bean
+   @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
@@ -25,5 +25,5 @@ public class MailConfiguration {
         props.put("mail.debug", "true");
 
         return mailSender;
-    }*/
-}
+    }
+}*/
