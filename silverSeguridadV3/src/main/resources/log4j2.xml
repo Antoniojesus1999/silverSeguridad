@@ -48,8 +48,8 @@
 
         <!-- Appender DEBUG -->
         <RollingFile name="searchFilesAppenderDEBUG"
-                     fileName="log/searchFiles_debug.log"
-                     filePattern="log/searchFiles_debug_%d{yyyy-MM-dd}.log.zip">
+                     fileName="${log-path}/searchFiles_debug.log"
+                     filePattern="${log-path}/searchFiles_debug_%d{yyyy-MM-dd}.log.zip">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1} - %M] Line %L - %msg%n</pattern>
             </PatternLayout>

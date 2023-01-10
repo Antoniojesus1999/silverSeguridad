@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/api")
@@ -21,7 +23,7 @@ public class MailController {
     private MailService mailService;
 
     @PostMapping("/mail")
-    public void metodoPost(@RequestBody MailRequest data) {
-        log.info("Prueba de logger");
+    public void metodoPost(@RequestBody MailRequest data) throws IOException {
+        mailService.leerDocumentoWordDoc(data);
     }
 }
