@@ -3,28 +3,19 @@ package com.app.silverSeguridadV3.services;
 
 import com.app.silverSeguridadV3.models.MailRequest;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Document;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.rtf.RTFEditorKit;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 @Service
@@ -89,44 +80,58 @@ public class MailService {
                 }
             }
 
-            List<XWPFTable> tables = document.getTables();
-            for (XWPFTable table : tables){
-                System.out.println("body "+ table.getBody());
-                System.out.println("text " +table.getText().replace("EE","TOMA!"));
-                System.out.println("table.getRows() " +table.getRows());
-                System.out.println("table.getRow(0) " +table.getRow(0));
-                List<XWPFTableRow> rows = table.getRows();
-                for (XWPFTableRow row : rows) {
 
-                    List<XWPFTableCell> cells = row.getTableCells();
-                    for (XWPFTableCell cell :cells){
-                        for (XWPFParagraph p : cell.getParagraphs()) {
-                            List<XWPFRun> runs = p.getRuns();
-                            if (runs != null) {
-                                // Iterar sobre cada palabra de la oración
-                                for (XWPFRun r : runs) {
-                                    String text = r.getText(0);
-                                    if (text != null && text.contains("Nombre:")) {
-                                        text = "Nombre: Antonio Jesús ";
-                                        r.setText(text);
-                                    }
-                                }
 
-                            }
 
-                        }
-                    }
+
+            //XWPFTable tablaDeudor = document.get;
+
+            //row.getCell(0).setText("Nombre: Pedrito Sanchez");
+            int numTabla = 0;
+            for (XWPFTable tabla : document.getTables()) {
+                if(numTabla == 0){
+                    tabla.getRow(0).getCell(0).setText("Jorge Yago");
+                    tabla.getRow(0).getCell(1).setText("49129916F");
+                    tabla.getRow(1).getCell(0).setText("Francia 15");
+                    tabla.getRow(2).getCell(0).setText("41720");
+                    tabla.getRow(2).getCell(1).setText("Los palacios y villafranca");
+                    tabla.getRow(2).getCell(2).setText("España");
+                    tabla.getRow(3).getCell(0).setText("ES 1233 3244 2344 32423");
+                    numTabla ++;
+                } else if (numTabla == 1) {
+                    XWPFTableCell cell = tabla.getRow(6).getCell(0);
+                    // Create a new paragraph
+                    XWPFParagraph paragraph = cell.addParagraph();
+                    // Create a new run
+                    XWPFRun run = paragraph.createRun();
+                    // Add the image to the run
+                    InputStream img = new FileInputStream("firma.png");
+                    run.addPicture(img, XWPFDocument.PICTURE_TYPE_JPEG, "firma1.png", Units.toEMU(100), Units.toEMU(100));
+                    numTabla ++;
                 }
 
             }
+
+
+
+
+
+
+
+
             // Guardar el documento modificado
             FileOutputStream out = new FileOutputStream("sepa.docx");
             document.write(out);
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            throw new RuntimeException(e);
         }
-}}
+    }
+
+
+}
 
 
 
